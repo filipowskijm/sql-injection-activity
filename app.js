@@ -1,8 +1,10 @@
-const http = require('http'),
-path = require('path'),
-express = require('express'),
-bodyParser = require('body-parser');
 const sqlite3 = require('sqlite3').verbose();
+
+const http = require('http'),
+    path = require('path'),
+    express = require('express'),
+    bodyParser = require('body-parser');
+
 const app = express();
 app.use(express.static('.'))
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -16,6 +18,8 @@ db.serialize(function () {
 
 app.get('/', function (req, res) {
     res.sendFile('index.html');
+    res.send('Hello World');
+    console.log('Listening on port 3000')
 })
 
 app.post('/login', function (req, res) {
@@ -32,7 +36,6 @@ app.post('/login', function (req, res) {
         if (err) {
             console.log('ERROR', err);
             res.redirect("/index.html#error");
-        
         } else if (!row) {
             res.redirect("/index.html#unauthorized");
         } else {
@@ -42,3 +45,4 @@ app.post('/login', function (req, res) {
 });
 
 app.listen(3000);
+console.log('listening on port 3000');
